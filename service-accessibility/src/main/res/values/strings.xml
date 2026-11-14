@@ -1,0 +1,5 @@
+<resources>
+    <string name="accessibility_service_label">Speedbump</string>
+    <string name="accessibility_service_summary">Puts a speedbump in front of the apps you chose.</string>
+    <string name="accessibility_service_description">Speedbump watches for the moment one of the apps YOU selected comes to the foreground, so it can show your delay screen before you start scrolling.\n\nIt reads nothing else. The system is explicitly told to ignore every other app on your phone. Nothing it sees is stored off your device — this app has no internet permission at all.\n\nYou can turn this off at any time and Speedbump stops immediately.</string>
+</resources>

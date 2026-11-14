@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  NOTE: android:packageNames is deliberately absent.
+
+  Leaving it out here means "all packages", which is what the system uses
+  until the service connects. SpeedbumpService immediately narrows it in
+  onServiceConnected() by calling setServiceInfo() with the currently armed
+  blocklist, and re-narrows it whenever rules or schedules change.
+
+  That dynamic narrowing is the single most important battery decision in
+  this app: the system then filters events in system_server and delivers us
+  nothing at all for unwatched apps, instead of waking our process for every
+  window change on the device.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagReportViewIds|flagRetrieveInteractiveWindows"
+    android:canRetrieveWindowContent="true"
+    android:canRequestFilterKeyEvents="false"
+    android:canPerformGestures="false"
+    android:description="@string/accessibility_service_description"
+    android:notificationTimeout="0"
+    android:summary="@string/accessibility_service_summary" />

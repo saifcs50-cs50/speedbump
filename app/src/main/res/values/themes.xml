@@ -1,0 +1,20 @@
+<resources>
+    <!-- Dark-first. Compose owns all real styling; this theme only removes
+         the platform action bar and lets Compose draw edge to edge. -->
+    <style name="Theme.Speedbump" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/speedbump_window_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Fallback interception path for OEMs that break overlay windows. -->
+    <style name="Theme.Speedbump.Interception" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

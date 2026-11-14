@@ -1,0 +1,268 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "e7bd970785dcbf4e0abbbaf911be31ac",
+    "entities": [
+      {
+        "tableName": "interception_events",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `package_name` TEXT NOT NULL, `started_at_ms` INTEGER NOT NULL, `resolved_at_ms` INTEGER, `outcome` TEXT, `delay_seconds` INTEGER NOT NULL, `escalation_index` INTEGER NOT NULL, `intention` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "package_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startedAtMs",
+            "columnName": "started_at_ms",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resolvedAtMs",
+            "columnName": "resolved_at_ms",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "outcome",
+            "columnName": "outcome",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delaySeconds",
+            "columnName": "delay_seconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "escalationIndex",
+            "columnName": "escalation_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "intention",
+            "columnName": "intention",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_interception_events_package_name",
+            "unique": false,
+            "columnNames": [
+              "package_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_interception_events_package_name` ON `${TABLE_NAME}` (`package_name`)"
+          },
+          {
+            "name": "index_interception_events_started_at_ms",
+            "unique": false,
+            "columnNames": [
+              "started_at_ms"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_interception_events_started_at_ms` ON `${TABLE_NAME}` (`started_at_ms`)"
+          }
+        ]
+      },
+      {
+        "tableName": "app_rules",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`package_name` TEXT NOT NULL, `enabled` INTEGER NOT NULL, `base_delay_seconds` INTEGER NOT NULL, `challenge` TEXT NOT NULL, `ask_intention` INTEGER NOT NULL, `daily_budget_minutes` INTEGER, `daily_launch_quota` INTEGER, `session_grant_minutes` INTEGER NOT NULL, `created_at_ms` INTEGER NOT NULL, PRIMARY KEY(`package_name`))",
+        "fields": [
+          {
+            "fieldPath": "packageName",
+            "columnName": "package_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseDelaySeconds",
+            "columnName": "base_delay_seconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "challenge",
+            "columnName": "challenge",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "askIntention",
+            "columnName": "ask_intention",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dailyBudgetMinutes",
+            "columnName": "daily_budget_minutes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "dailyLaunchQuota",
+            "columnName": "daily_launch_quota",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sessionGrantMinutes",
+            "columnName": "session_grant_minutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtMs",
+            "columnName": "created_at_ms",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "package_name"
+          ]
+        }
+      },
+      {
+        "tableName": "daily_app_usage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`day_epoch_day` INTEGER NOT NULL, `package_name` TEXT NOT NULL, `foreground_ms` INTEGER NOT NULL, `opens` INTEGER NOT NULL, PRIMARY KEY(`day_epoch_day`, `package_name`))",
+        "fields": [
+          {
+            "fieldPath": "dayEpochDay",
+            "columnName": "day_epoch_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "package_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foregroundMs",
+            "columnName": "foreground_ms",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "opens",
+            "columnName": "opens",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "day_epoch_day",
+            "package_name"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_daily_app_usage_day_epoch_day",
+            "unique": false,
+            "columnNames": [
+              "day_epoch_day"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_daily_app_usage_day_epoch_day` ON `${TABLE_NAME}` (`day_epoch_day`)"
+          }
+        ]
+      },
+      {
+        "tableName": "daily_device_usage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`day_epoch_day` INTEGER NOT NULL, `pickups` INTEGER NOT NULL, `first_pickup_minute` INTEGER, `total_foreground_ms` INTEGER NOT NULL, PRIMARY KEY(`day_epoch_day`))",
+        "fields": [
+          {
+            "fieldPath": "dayEpochDay",
+            "columnName": "day_epoch_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pickups",
+            "columnName": "pickups",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstPickupMinute",
+            "columnName": "first_pickup_minute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "totalForegroundMs",
+            "columnName": "total_foreground_ms",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "day_epoch_day"
+          ]
+        }
+      },
+      {
+        "tableName": "hourly_usage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`day_epoch_day` INTEGER NOT NULL, `hour` INTEGER NOT NULL, `foreground_ms` INTEGER NOT NULL, PRIMARY KEY(`day_epoch_day`, `hour`))",
+        "fields": [
+          {
+            "fieldPath": "dayEpochDay",
+            "columnName": "day_epoch_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hour",
+            "columnName": "hour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foregroundMs",
+            "columnName": "foreground_ms",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "day_epoch_day",
+            "hour"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7bd970785dcbf4e0abbbaf911be31ac')"
+    ]
+  }
+}

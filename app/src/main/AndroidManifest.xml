@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      Speedbump deliberately declares NO android.permission.INTERNET.
+      The app is physically incapable of making a network call.
+      This is a product claim - do not add it.
+    -->
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--
+      WorkManager merges ACCESS_NETWORK_STATE in for its NetworkType
+      constraints. Speedbump schedules nothing that touches a network, and a
+      user reading the permission list should not see the word "network" under
+      an app whose pitch is that it cannot reach one.
+      Enforced by :app:verifyDebugNoNetworkPermissions.
+    -->
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:node="remove" />
+
+    <!--
+      Enumerate launchable apps without QUERY_ALL_PACKAGES, which would
+      require a separate Play Console declaration and review.
+      queryIntentActivities() against this filter returns every app with a
+      launcher entry - exactly the set a user can block.
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".SpeedbumpApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Speedbump"
+        tools:targetApi="36">
+
+        <!--
+          WorkManager's default startup provider is removed so that
+          SpeedbumpApplication can initialise it on demand with Hilt's worker
+          factory. Without this the default initialiser wins the race and
+          UsageIngestWorker cannot be constructed.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
