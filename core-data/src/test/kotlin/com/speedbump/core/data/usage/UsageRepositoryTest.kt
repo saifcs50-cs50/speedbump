@@ -41,7 +41,7 @@ class UsageRepositoryTest {
         clock = FixedClock(nowMs),
     )
 
-    // --- stats assembly ----------------------------------------------------
+    // stats assembly
 
     @Test
     fun `the trend always has one entry per day in the range, oldest first`() = runTest {
@@ -203,7 +203,7 @@ class UsageRepositoryTest {
         }
     }
 
-    // --- ingest ------------------------------------------------------------
+    // ingest
 
     @Test
     fun `ingest without usage access writes nothing and says why`() = runTest {
@@ -274,7 +274,7 @@ class UsageRepositoryTest {
         assertThat(usageDao.appUsageRows.single().foregroundMs).isEqualTo(30.minutes)
     }
 
-    // --- helpers -----------------------------------------------------------
+    // helpers
 
     private fun appDay(day: Long, pkg: String, ms: Long, opens: Int) =
         DailyAppUsageEntity(dayEpochDay = day, packageName = pkg, foregroundMs = ms, opens = opens)

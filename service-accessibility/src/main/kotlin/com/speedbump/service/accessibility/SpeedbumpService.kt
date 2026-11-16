@@ -126,7 +126,7 @@ class SpeedbumpService : AccessibilityService() {
         super.onDestroy()
     }
 
-    // ---------------------------------------------------------------- intercept
+    // intercept
 
     private fun beginInterception(targetPackage: String) {
         val startedAtElapsed = SystemClock.elapsedRealtime()
@@ -250,7 +250,7 @@ class SpeedbumpService : AccessibilityService() {
         Log.i(TAG, "RESOLVED ${finished.packageName} as $outcome")
     }
 
-    // ------------------------------------------------------------ service info
+    // service info
 
     /**
      * Pushes the current watch list into the system.

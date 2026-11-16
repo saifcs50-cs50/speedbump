@@ -26,7 +26,7 @@ class ChallengeGeneratorTest {
         }
     }
 
-    // --- typing ------------------------------------------------------------
+    // typing
 
     @Test
     fun `the phrase is at least the length the spec asks for`() {
@@ -67,7 +67,7 @@ class ChallengeGeneratorTest {
         assertThat(typing(7).phrase).isEqualTo(typing(7).phrase)
     }
 
-    // --- arithmetic --------------------------------------------------------
+    // arithmetic
 
     @Test
     fun `the stated answer is always the correct one`() {
@@ -114,7 +114,7 @@ class ChallengeGeneratorTest {
         assertThat(problem.question).contains("+")
     }
 
-    // --- other types -------------------------------------------------------
+    // other types
 
     @Test
     fun `the hold challenge uses the duration the spec names`() {
@@ -135,7 +135,7 @@ class ChallengeGeneratorTest {
         assertThat(unregistered.expectedPayload).isNull()
     }
 
-    // --- helpers -----------------------------------------------------------
+    // helpers
 
     private fun typing(seed: Int) =
         generator.generate(ChallengeType.TYPING, random = Random(seed)) as Challenge.Typing

@@ -346,7 +346,7 @@ class UsageAggregatorTest {
         assertThat(result.hourly.size).isAtMost(24 * 31)
     }
 
-    // --- helpers -----------------------------------------------------------
+    // helpers
 
     private fun resumed(pkg: String, atMs: Long) =
         RawUsageEvent(pkg, atMs, UsageEventType.RESUMED)
